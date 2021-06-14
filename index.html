@@ -5,7 +5,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
-    <title>幸运大转盘</title>
+    <title>ReLife Simulator</title>
     <link rel="stylesheet" href="./css/style.css" />
     <script>
         _resize();
@@ -23,13 +23,16 @@
 <body>
 
     <div class="game">
-        <div class="title">
-            <img src="images/game-title.png" alt="">  
-        </div>
-        <div class="luckDrawCount">你有<span>10</span>次抽奖机会</div>
+        <audio src="music/Alla Turca.mp3" id="aud" autoplay="autoplay" controls="controls" preload="auto"></audio>
+        <div class="luckDrawCount">In your <span>0</span> th ReLife</div>
         <div class="wheel-box">
             <div id="wheel"></div>
             <div id="arrow"></div>
+        </div>
+        <div class="resultHistory">
+            <p># Data from UNICEF #</p>     
+            <ul id="resultUl">
+            </ul>
         </div>
     </div>
     

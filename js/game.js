@@ -3,12 +3,496 @@ var wheel = document.getElementById('wheel'); // 转盘
     var luckDrawCountDom = document.querySelector('.luckDrawCount span'); // 抽奖次数dom
     // 转盘游戏属性
     var gameState = false;          //  游戏状态
-    var luckDrawCount = 10;         //  抽奖次数
-    var rotateZPositionCount = 0;   //  当前转盘的rotateZ 值
+    var luckDrawCount = 0;         //  抽奖次数
+    var rotateZPositionCount = 0;   //  当前转盘的rotateZ
     var preUseRotateZ = 0;          //  上一次已抽奖中奖奖品的RotateZ
     var rotateZ = 360;              //  一圈360deg
-    var rotateZCount = 10;          //  旋转圈数的倍数
-    var runTime = 6;                //  游戏过度时间
+    var rotateZCount = 5;          //  旋转圈数的倍数
+    var runTime = 3;                //  游戏过度时间
+        
+    const dataCountry=["India",
+    "China",
+    "Nigeria",
+    "Pakistan",
+    "Indonesia",
+    "The United States",
+    "The Democratic Republic of the Congo",
+    "Ethiopia",
+    "Bangladesh",
+    "Brazil",
+    "Egypt",
+    "Philippines",
+    "Mexico",
+    "Tanzania",
+    "Uganda",
+    "Russia",
+    "Sudan",
+    "Vietnam",
+    "Afghanistan",
+    "Iran",
+    "Kenya",
+    "Angola",
+    "Turkey",
+    "Mozambique",
+    "South Africa",
+    "Niger",
+    "Iraq",
+    "Cameroon",
+    "Myanmar",
+    "Japan",
+    "Ghana",
+    "Algeria",
+    "Mali",
+    "France",
+    "Britain",
+    "Madagascar",
+    "Yemen",
+    "Colombia",
+    "Burkina faso",
+    "Ivory coast",
+    "Argentina",
+    "Zambia",
+    "Germany",
+    "Thailand",
+    "Malawi",
+    "Chad",
+    "Morocco",
+    "Malaysia",
+    "South Sudan",
+    "Venezuela",
+    "Uzbekistan",
+    "Peru",
+    "Nepal",
+    "Saudi Arabia",
+    "Senegal",
+    "Zimbabwe",
+    "Italy",
+    "Benin",
+    "Somalia",
+    "Guinea",
+    "South Korea",
+    "Guatemala",
+    "Spain",
+    "Burundi",
+    "Ukraine",
+    "Syria",
+    "Canada",
+    "North Korea",
+    "Cambodia",
+    "Rwanda",
+    "Poland",
+    "Australia",
+    "Sri Lanka",
+    "Kazakhstan",
+    "Ecuador",
+    "Sierra leone",
+    "Haiti",
+    "Chile",
+    "Togo",
+    "Jordan",
+    "Bolivia",
+    "Papua New Guinea",
+    "Tajikistan",
+    "Dominican",
+    "Netherlands",
+    "Romania",
+    "Taiwan",
+    "Tunisia",
+    "Central African",
+    "Honduras",
+    "Republic of the Congo",
+    "Liberia",
+    "Israel",
+    "Eritrea",
+    "Laos",
+    "Azerbaijan",
+    "Libya",
+    "Palestinian",
+    "Kyrgyzstan",
+    "Belgium",
+    "Sweden",
+    "Paraguay",
+    "Mauritania",
+    "Cuba",
+    "El Salvador",
+    "Nicaragua",
+    "Oman",
+    "Lebanon",
+    "Turkmenistan",
+    "United Arab emirates",
+    "Czech republic",
+    "Belarus",
+    "Switzerland",
+    "Hungary",
+    "Austria",
+    "Greek",
+    "Portugal",
+    "Kuwait",
+    "Costa rica",
+    "Panama",
+    "Norway",
+    "Denmark",
+    "Ireland",
+    "New Zealand",
+    "Namibia",
+    "Hong Kong",
+    "Gambia",
+    "Serbia",
+    "Finland",
+    "Guinea Bissau",
+    "Bulgaria",
+    "Mongolia",
+    "Lesotho",
+    "Singapore",
+    "Slovakia",
+    "Gabon",
+    "Botswana",
+    "Uruguay",
+    "Equatorial guinea",
+    "East timor",
+    "Jamaica",
+    "Georgia",
+    "Albania",
+    "Croatia",
+    "Armenia",
+    "Bosnia and herzegovina",
+    "Moldova",
+    "Kosovo",
+    "Lithuania",
+    "Qatar",
+    "Puerto Rico",
+    "Djibouti",
+    "North Macedonia",
+    "Comoros",
+    "Bahrain",
+    "Slovenia",
+    "Western Sahara",
+    "Latvia",
+    "Solomon islands",
+    "Fiji",
+    "Trinidad and Tobago",
+    "Mauritius",
+    "Estonia",
+    "Guyana",
+    "Bhutan",
+    "Cape Verde",
+    "Cyprus",
+    "Belize",
+    "Suriname",
+    "Brunei",
+    "Montenegro",
+    "Vanuatu",
+    "Luxembourg",
+    "Maldives",
+    "Bahamas",
+    "Macau",
+    "Malta",
+    "Iceland",
+    "New caledonia",
+    "Samoa",
+    "French Polynesia",
+    "Guam",
+    "Barbados",
+    "Kiribati",
+    "St. Lucia",
+    "Curacao",
+    "Tonga",
+    "The federated states of Micronesia",
+    "Grenada",
+    "Antigua and barbuda",
+    "Saint Vincent and the grenadines",
+    "Jersey",
+    "Aruba",
+    "The U.S. virgin islands",
+    "The Marshall islands",
+    "Seychelles",
+    "American Samoa",
+    "Dominic",
+    "Isle of man",
+    "Northern mariana islands",
+    "Cayman islands",
+    "Greenland",
+    "Faroe islands",
+    "St kitts and nevis",
+    "Bermuda",
+    "Guernsey",
+    "Turks and caicos islands",
+    "Dutch st. Martin's",
+    "Andorra",
+    "French saint Martin)",
+    "Gibraltar",
+    "Liechtenstein",
+    "British virgin islands",
+    "SAN marino",
+    "Nauru",
+    "Monaco",
+    "Tuvalu",
+    "Cook islands",
+    "Palau",
+    "Away",
+    "Wallis and Futuna",
+    "Saint Barth",
+    "Montserrat",
+    "Saint Helena",
+    "Saint Pierre and Miquelon",
+    "Falklands",
+    ]
+
+    const dataRatio = [
+    0.179369185,
+    0.116660088,
+    0.052104876,
+    0.04490831,
+    0.029767875,
+    0.02917347,
+    0.026980482,
+    0.02653533,
+    0.022001723,
+    0.020641351,
+    0.019722924,
+    0.017944256,
+    0.015798468,
+    0.015156998,
+    0.013686862,
+    0.010405389,
+    0.010217107,
+    0.010079201,
+    0.009796745,
+    0.009789926,
+    0.009216044,
+    0.008870993,
+    0.008815318,
+    0.008267509,
+    0.007826801,
+    0.00755071,
+    0.007350484,
+    0.006786572,
+    0.006782117,
+    0.006518972,
+    0.006384764,
+    0.006183538,
+    0.006075416,
+    0.00571344,
+    0.005662409,
+    0.00559132,
+    0.005562893,
+    0.005525953,
+    0.005378297,
+    0.005352997,
+    0.005171935,
+    0.005147159,
+    0.005096501,
+    0.005067552,
+    0.005017242,
+    0.004825619,
+    0.004571552,
+    0.004266592,
+    0.004130712,
+    0.00410843,
+    0.003903682,
+    0.003891083,
+    0.003854943,
+    0.003683713,
+    0.003671814,
+    0.003628572,
+    0.003591173,
+    0.003564036,
+    0.003318383,
+    0.003229938,
+    0.00302709,
+    0.002989448,
+    0.002933277,
+    0.002916273,
+    0.002865519,
+    0.002803866,
+    0.002769376,
+    0.002663995,
+    0.002507218,
+    0.002459301,
+    0.002433661,
+    0.002264484,
+    0.002205474,
+    0.00217928,
+    0.002114416,
+    0.002042686,
+    0.001815248,
+    0.001761297,
+    0.001756614,
+    0.001738363,
+    0.001716995,
+    0.001432103,
+    0.001424043,
+    0.001376899,
+    0.001365722,
+    0.001342703,
+    0.001340039,
+    0.001327688,
+    0.001269639,
+    0.001219191,
+    0.001209073,
+    0.001189154,
+    0.001150376,
+    0.001149654,
+    0.001119049,
+    0.001039837,
+    0.001029222,
+    0.000992651,
+    0.000957294,
+    0.000907425,
+    0.000890654,
+    0.00085764,
+    0.000842302,
+    0.000830493,
+    0.000822881,
+    0.000782782,
+    0.000764766,
+    0.000751395,
+    0.000743841,
+    0.000680867,
+    0.000677997,
+    0.000643037,
+    0.000642255,
+    0.000612393,
+    0.000602473,
+    0.000595922,
+    0.000592992,
+    0.000566764,
+    0.000538867,
+    0.000513904,
+    0.000466485,
+    0.000460789,
+    0.000455762,
+    0.000451486,
+    0.000450165,
+    0.000448826,
+    0.000441931,
+    0.000436542,
+    0.000417327,
+    0.00041658,
+    0.000410456,
+    0.000382945,
+    0.00037228,
+    0.000361607,
+    0.000361482,
+    0.00035722,
+    0.000348221,
+    0.000323338,
+    0.000318155,
+    0.000316195,
+    0.000312724,
+    0.000307685,
+    0.000265076,
+    0.000252622,
+    0.000250708,
+    0.000232069,
+    0.000204405,
+    0.000196993,
+    0.000189047,
+    0.000182006,
+    0.000182004,
+    0.000174383,
+    0.000158321,
+    0.000146886,
+    0.000144027,
+    0.000129782,
+    0.000126232,
+    0.000124966,
+    0.000120169,
+    0.000110985,
+    0.000110769,
+    0.000109656,
+    0.000088,
+    0.0000861,
+    0.0000861,
+    0.0000749,
+    0.000068,
+    0.000064,
+    0.0000601,
+    0.000052,
+    0.0000511,
+    0.0000509,
+    0.0000507,
+    0.0000427,
+    0.0000406,
+    0.0000382,
+    0.0000348,
+    0.0000345,
+    0.0000303,
+    0.0000283,
+    0.000028,
+    0.0000236,
+    0.0000232,
+    0.0000183,
+    0.0000171,
+    0.0000151,
+    0.000015,
+    0.0000142,
+    0.0000113,
+    0.0000105,
+    0.00000993,
+    0.00000966,
+    0.00000964,
+    0.00000915,
+    0.00000908,
+    0.0000089,
+    0.00000797,
+    0.00000757,
+    0.00000641,
+    0.00000609,
+    0.00000577,
+    0.00000563,
+    0.00000554,
+    0.00000517,
+    0.00000511,
+    0.00000438,
+    0.00000431,
+    0.00000414,
+    0.00000387,
+    0.0000036,
+    0.0000032,
+    0.00000287,
+    0.00000257,
+    0.0000021,
+    0.00000176,
+    0.00000174,
+    0.00000172,
+    0.00000155,
+    0.00000153,
+    0.00000141,
+    0.00000105,
+    0.0000007,
+    0.000000439,
+    0.000000377,
+    0.000000286,
+    0.000000259,
+      
+
+]
+    var sumSegment = new Array();
+
+    var sum = 0;
+    
+    for (let index = 0; index < dataRatio.length; index++) {
+      sumSegment[index] = (sum + dataRatio[index] / 2)*360;
+      sum = sum + dataRatio[index];
+}
+    console.log(sumSegment);
+  
+    // Random function
+    function random(arr1, arr2) {
+      var sum = 1,
+        factor = 0,
+        random = Math.random();
+        console.log(random);
+    
+      for(let i = 0; i <arr2.length; i++) {
+        factor += arr2[i];
+        if(random <= factor) 
+        return i;
+      };
+      return null;
+    };
+    
 
     // 奖品指针位置
     // 20   一等奖，
@@ -16,66 +500,54 @@ var wheel = document.getElementById('wheel'); // 转盘
     // 200  二等奖，
     // 112  三等奖， 
     // 68   四等奖，
-    // 计算归着，每次抽奖最终rotateZ值 + 相应的奖品值位置 = (rotateZCount + rotateZPosition[0]) 等于一等奖
-    var rotateZPosition = [20, 158, 200, 112, 68];
+    // 计算规则，每次抽奖最终rotateZ值 + 相应的奖品值位置 = (rotateZCount + rotateZPosition[0]) 等于一等奖
 
+var rotateZPosition = sumSegment;
 
-    const prize = [                 //  奖品设置 传入一个奖项，0，1，2，3，4， 分别是12345等奖
-      {
-        title: '手气不错哟～恭喜获得',
-        prize: '100元红包', 
-      },
-      {
-        title: '手气不错哟～恭喜获得',
-        prize: '优惠券礼包',
-      },
-      {
-        title: '手气不错哟～恭喜获得',
-        prize: '优惠券礼包',
-      },
-      {
-        title: '手气不错哟～恭喜获得',
-        prize: '5元代金券',
-      },
-      {
-        title: '手气不错哟～恭喜获得',
-        prize: '1元红包',
-      },
-    ];
-    
     // 运行游戏
     function gameAction(rotateZPositionIndex){
         /// 转盘位置计算规则 一圈360deg 乘以 10圈，加上 奖品 rotateZ值，再减去上一次中奖rotateZ值
-        var toRotateZCount = (rotateZPositionCount - preUseRotateZ + rotateZPosition[rotateZPositionIndex]) + rotateZ * rotateZCount; // 达到圈数位置
+        var toRotateZCount = (rotateZPositionCount + preUseRotateZ - rotateZPosition[rotateZPositionIndex]) - rotateZ * rotateZCount; // 达到圈数位置
         wheel.style.transition = 'transform '+ runTime +'s ease-in-out 0s'; // 过度时间
-        wheel.style.transform = 'rotateZ(' + toRotateZCount + 'deg)'; // 旋转
+      wheel.style.transform = 'rotateZ(' + toRotateZCount + 'deg)'; // 旋转
+
+      console.log(preUseRotateZ);
+      console.log(rotateZPositionCount);
+
         preUseRotateZ = rotateZPosition[rotateZPositionIndex]; // 上传抽奖的中奖rotateZ
         rotateZPositionCount = toRotateZCount; // 保存当前转盘值
-        luckDrawCount = luckDrawCount-1;  // 游戏次数减一
+ 
+        luckDrawCount = luckDrawCount+1;  // 游戏次数加一
         
         // 页面更新抽奖次数
         luckDrawCountDom.innerHTML = luckDrawCount;
 
         //  弹出中奖信息
         setTimeout(() => {
-            gameState = false; // 设置游戏当前状态
-            alert(prize[rotateZPositionIndex].title+ '\r\n' + prize[rotateZPositionIndex].prize);
-        }, runTime*1000);
+          gameState = false; // 设置游戏当前状态
+          alert(dataCountry[rotateZPositionIndex])
+          /* alert(prize[rotateZPositionIndex].title + '\r\n' + prize[rotateZPositionIndex].prize); */
+          
+            var ele = document.createElement('li');
+          /* ele.innerHTML = prize[rotateZPositionIndex].title + '\r\n' + prize[rotateZPositionIndex].prize; */
+          ele.innerHTML = luckDrawCount+'. Today a baby was born in '+dataCountry[rotateZPositionIndex]+'! 👏👏👏'+"(Probability:"+dataRatio[rotateZPositionIndex]+")";
+          var list = document.getElementById('resultUl');
+          list.insertBefore(ele,list.childNodes[0])
 
+        }, runTime*1000);
     }
 
 
+    
     // 开始游戏
     arrow.addEventListener('click', function(){
         // 模拟抽奖
-        var rotateZPositionIndex = Math.round(Math.random()* 4);
+  /*   var rotateZPositionIndex = Math.round(Math.random() * 4);  */
+      var rotateZPositionIndex = random(dataCountry, dataRatio);
+
         // 判断游戏是否进行中
         if(gameState) return;
-        // 判断是否还有抽奖资格
-        if(luckDrawCount <= 0){
-            alert('Sorry 您没有抽奖机会了');
-            return;
-        }
+
         gameState = true; // 设置游戏当前状态
         // run game
         gameAction(rotateZPositionIndex);
